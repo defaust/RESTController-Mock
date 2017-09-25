@@ -1,5 +1,6 @@
-package ua.com.fdi.demo.controller;
+package ua.com.fdi.demo.config;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import ua.com.fdi.demo.entities.UserInfo;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -22,9 +23,9 @@ public class UserController {
                 .build();
     }
 
-//    @GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public @ResponseBody String home() {
-//        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-//        return "Welcome, " + username;
-//    }
+    @GetMapping(value = "/")
+    public @ResponseBody String home() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return "Welcome, " + username;
+    }
 }
