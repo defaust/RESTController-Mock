@@ -1,4 +1,4 @@
-package ua.com.fdi.config;
+package ua.com.fdi.demo.config;
 
 import java.util.Arrays;
 

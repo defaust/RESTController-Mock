@@ -1,4 +1,4 @@
-package ua.com.fdi.security;
+package ua.com.fdi.demo.security;
 
 import java.util.Arrays;
 import java.util.Collection;

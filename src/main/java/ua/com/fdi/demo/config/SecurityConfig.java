@@ -1,6 +1,6 @@
-package ua.com.fdi.config;
+package ua.com.fdi.demo.config;
 
-import ua.com.fdi.security.OpenIdConnectFilter;
+import ua.com.fdi.demo.security.OpenIdConnectFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
