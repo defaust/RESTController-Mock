@@ -23,7 +23,7 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/user")
     public @ResponseBody String home() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return "Welcome, " + username;
