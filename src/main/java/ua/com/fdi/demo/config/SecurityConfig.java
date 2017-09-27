@@ -33,17 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
         http
         .addFilterAfter(new OAuth2ClientContextFilter(), AbstractPreAuthenticatedProcessingFilter.class)
         .addFilterAfter(myFilter(), OAuth2ClientContextFilter.class)
         .httpBasic().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/openid_login")) //"/google-login"))
         .and()
         .authorizeRequests()
-       // .antMatchers("/","/index*").permitAll()
+
         .anyRequest().authenticated()
         ;
-
-     // @formatter:on
     }
 }
