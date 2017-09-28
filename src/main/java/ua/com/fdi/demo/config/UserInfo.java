@@ -1,5 +1,4 @@
-package ua.com.fdi.demo.entities;
-
+package ua.com.fdi.demo.config;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.*;

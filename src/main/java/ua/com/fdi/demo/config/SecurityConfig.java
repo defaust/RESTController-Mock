@@ -3,8 +3,9 @@ package ua.com.fdi.demo.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
@@ -18,9 +19,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private OAuth2RestTemplate restTemplate;
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**");
+    }
+
     @Bean
-    public OpenIdConnectFilter openIdConnectFilter() {
-        OpenIdConnectFilter filter = new OpenIdConnectFilter("/openid-login");
+    public OpenIdConnectFilter myFilter() {
+        final OpenIdConnectFilter filter = new OpenIdConnectFilter("/openid_login"); //"/google-login");
         filter.setRestTemplate(restTemplate);
         return filter;
     }
@@ -28,10 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .addFilterAfter(new OAuth2ClientContextFilter(), AbstractPreAuthenticatedProcessingFilter.class)
-                .addFilterAfter(openIdConnectFilter(), OAuth2ClientContextFilter.class)
-                .httpBasic()
-                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/openid-login"))
+        .addFilterAfter(new OAuth2ClientContextFilter(), AbstractPreAuthenticatedProcessingFilter.class)
+        .addFilterAfter(myFilter(), OAuth2ClientContextFilter.class)
+//        .addFilterAfter(myFilter(), AbstractPreAuthenticatedProcessingFilter.class)
+                .httpBasic().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/openid_login")) //"/google-login"))
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated();
