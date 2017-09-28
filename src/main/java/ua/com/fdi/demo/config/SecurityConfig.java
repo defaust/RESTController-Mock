@@ -1,6 +1,5 @@
 package ua.com.fdi.demo.config;
 
-import ua.com.fdi.demo.security.OpenIdConnectFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +11,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import ua.com.fdi.demo.security.OpenIdConnectFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -36,11 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
         .addFilterAfter(new OAuth2ClientContextFilter(), AbstractPreAuthenticatedProcessingFilter.class)
         .addFilterAfter(myFilter(), OAuth2ClientContextFilter.class)
-        .httpBasic().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/openid_login")) //"/google-login"))
-        .and()
-        .authorizeRequests()
-
-        .anyRequest().authenticated()
-        ;
+//        .addFilterAfter(myFilter(), AbstractPreAuthenticatedProcessingFilter.class)
+                .httpBasic().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/openid_login")) //"/google-login"))
+                .and()
+                .authorizeRequests()
+                .anyRequest().authenticated();
     }
 }
